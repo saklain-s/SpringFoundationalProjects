@@ -1,11 +1,13 @@
 package com.saklain.aopdemo.dao;
 
 
-import org.springframework.stereotype.Repository;
+import com.saklain.aopdemo.Account;
 
 
 public interface AccountDAO {
 
-    void addAccount();
+    void addAccount(Account theAccount, boolean vipFlag);
+
+    boolean doWork();
 }
 
