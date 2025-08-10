@@ -3,6 +3,8 @@ package com.saklain.aopdemo.dao;
 
 import com.saklain.aopdemo.Account;
 
+import java.util.List;
+
 
 public interface AccountDAO {
 
@@ -17,5 +19,7 @@ public interface AccountDAO {
     public String getServiceCode();
 
     public void setServiceCode(String serviceCode);
+
+    List<Account> findAccounts();
 }
 
