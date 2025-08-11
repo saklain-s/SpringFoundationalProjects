@@ -2,6 +2,7 @@ package com.saklain.aopdemo;
 
 import com.saklain.aopdemo.dao.AccountDAO;
 import com.saklain.aopdemo.dao.MembershipDAO;
+import com.saklain.aopdemo.service.TrafficFortuneService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -17,14 +18,51 @@ public class AopdemoApplication {
 	}
 
 	@Bean
-	public CommandLineRunner commandLineRunner(AccountDAO theAccountDAO,MembershipDAO theMembershipDAO) {
+	public CommandLineRunner commandLineRunner(AccountDAO theAccountDAO, MembershipDAO theMembershipDAO,
+											   TrafficFortuneService trafficFortuneService) {
 
 		return runner -> {
 
 			// demoTheBeforeAdvice(theAccountDAO,theMembershipDAO);
 			// demoTheAfterReturningAdvice(theAccountDAO);
-			demoTheAfterThrowingAdvice(theAccountDAO);
+			// demoTheAfterThrowingAdvice(theAccountDAO);
+			// domeTheAfterAdvice(theAccountDAO);
+			demoTheAroundAdvice(trafficFortuneService);
 		};
+	}
+
+	private void demoTheAroundAdvice(TrafficFortuneService theTrafficFortuneService) {
+
+		System.out.println("\nMain Program: demoTheAroundAdvice");
+
+		System.out.println("Calling getFortune() ");
+
+		String data = theTrafficFortuneService.getFortune();
+
+		System.out.println("\nMy fortune is:"+data);
+
+		System.out.println("Finished");
+	}
+
+	private void domeTheAfterAdvice(AccountDAO theAccountDAO) {
+		// call the method to find the accounts
+		List<Account> theAccounts=null;
+		try {
+			// add a boolean flag to simulate exceptions
+			boolean tripWire = false;
+			theAccounts = theAccountDAO.findAccounts(tripWire);
+		}
+		catch (Exception exc){
+			System.out.println("\n\nMain Program: ... caught exception: "+exc);
+		}
+
+
+		// display the accounts
+		System.out.println("\n\nMain Program demoTheAfterAdvice");
+		System.out.println("---");
+
+		System.out.println(theAccounts);
+		System.out.println("\n");
 	}
 
 	private void demoTheAfterThrowingAdvice(AccountDAO theAccountDAO) {
