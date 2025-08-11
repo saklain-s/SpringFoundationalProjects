@@ -8,7 +8,6 @@ import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
-import java.util.LinkedList;
 import java.util.List;
 
 @Aspect
@@ -28,7 +27,19 @@ public class MyDemoLoggingAspect {
         long begin = System.currentTimeMillis();
 
         // now, let's execute the method
-        Object result = theProceedingJointPoint.proceed();
+        Object result = null;
+        try {
+            result = theProceedingJointPoint.proceed();
+        }
+        catch (Exception exc){
+            // log the exception
+            System.out.println(exc.getMessage());
+
+            // give user a custom message
+            result = "Major accident! But no worries, your private AOP helicopter is on the way!";
+
+        }
+
 
         // get end timestamp
         long end = System.currentTimeMillis();
