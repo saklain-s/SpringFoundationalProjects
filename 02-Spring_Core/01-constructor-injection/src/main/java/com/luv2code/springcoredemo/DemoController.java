@@ -7,15 +7,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class DemoController {
-    private Coach myCoach;
 
-    @Autowired
-    public DemoController(Coach myCoach) {
+    Coach myCoach;
+
+    public DemoController(Coach myCoach){
         this.myCoach = myCoach;
     }
 
-    @GetMapping("/dailywork")
-    public String getDailyWorkOut(){
-        return myCoach.getDailyWorkout();
+    @GetMapping("/")
+    public String method(){
+        return myCoach.dailyWorkout();
     }
 }
