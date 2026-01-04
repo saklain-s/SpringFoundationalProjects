@@ -11,7 +11,6 @@ public class DemoController {
     private Coach myCoach;
 
    @Autowired
-
    public void setCoach(Coach theCoach){
        myCoach = theCoach;
    }
