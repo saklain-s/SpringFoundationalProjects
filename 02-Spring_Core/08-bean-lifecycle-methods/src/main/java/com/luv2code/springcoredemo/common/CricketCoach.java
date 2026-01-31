@@ -15,7 +15,7 @@ public class CricketCoach implements Coach {
         System.out.println("In constructor: "+ getClass().getSimpleName());
     }
 
-    //define out init methd
+    //define out init method
     @PostConstruct
     public void doMyStartUpStuff(){
         System.out.println("In doMyStartUpStuff(): " + getClass().getSimpleName());
