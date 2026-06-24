@@ -3,6 +3,7 @@ package com.example.practice.controller;
 
 import com.example.practice.model.Note;
 import com.example.practice.service.NoteService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,17 +20,25 @@ public class NoteController {
     }
 
     @PostMapping
-    public Note create(@RequestBody Note note) {
-        return service.save(note);
+    public ResponseEntity<Note> create(@RequestBody Note note) {
+        Note savedNoted = service.save(note);
+        return ResponseEntity.status(201).body(savedNoted);
     }
 
     @GetMapping
-    public List<Note> getAll() {
-        return service.getAll();
+    public ResponseEntity<List<Note>> getAll() {
+        return ResponseEntity.ok(service.getAll());
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         service.delete(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Note> update(@PathVariable Long id,@RequestBody Note note){
+        Note updatedNote = service.update(id,note);
+        return ResponseEntity.ok(updatedNote);
     }
 }

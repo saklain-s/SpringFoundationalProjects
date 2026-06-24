@@ -1,7 +1,9 @@
 package com.example.practice.service;
+import com.example.practice.exception.NoteNotFoundException;
 import com.example.practice.model.Note;
 import com.example.practice.repository.NoteRepository;
 
+import org.aspectj.weaver.ast.Not;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,15 +17,23 @@ public class NoteService {
         this.repository = repository;
     }
 
-    public Note save(Note note) {
+    public Note save(Note note){
         return repository.save(note);
     }
 
-    public List<Note> getAll() {
+    public List<Note> getAll(){
         return repository.findAll();
     }
 
-    public void delete(Long id) {
+    public void delete(Long id){
         repository.deleteById(id);
     }
+
+    public Note update(Long id,Note updatedNote){
+        Note note = repository.findById(id).orElseThrow(() -> new NoteNotFoundException("Can't find the note"));
+        note.setContent(updatedNote.getContent());
+       return repository.save(note);
+    }
+
+
 }
